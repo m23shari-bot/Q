@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الإدارة</title>
+    <title>تعديل بيانات نظام الإدارة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Cairo', sans-serif; background-color: #f8f9fa; }
-        .copy-btn { cursor: pointer; transition: opacity 0.2s; }
-        .copy-btn:active { opacity: 0.5; }
     </style>
 </head>
 <body class="p-4">
@@ -46,20 +44,6 @@
             </div>
         </div>
         <canvas id="earningsChart" height="200"></canvas>
-    </div>
-
-    <div class="max-w-md mx-auto bg-[#1a1a1a] text-white rounded-3xl p-6 mb-4">
-        <h3 class="text-center font-bold mb-2">الاستعلام عن الأرباح</h3>
-        <p class="text-center text-gray-400 text-xs mb-4">أدخل رقم الآيبان (IBAN) المشترك لعرض تفاصيل أرباحه</p>
-        
-        <div class="relative mb-4">
-            <input type="text" placeholder="أدخل رقم الآيبان هنا..." class="w-full bg-[#2a2a2a] border-none rounded-xl py-3 px-4 text-right text-sm focus:ring-1 focus:ring-gray-500">
-            <button class="absolute left-3 top-3 text-gray-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            </button>
-        </div>
-        
-        <button class="w-full bg-white text-black font-bold py-3 rounded-xl">استعلام الآن</button>
     </div>
 
     <div class="max-w-md mx-auto bg-white rounded-xl shadow-sm p-4 mb-4">
@@ -100,7 +84,6 @@
             <div class="text-right">
                 <div class="flex items-center justify-end gap-1 text-orange-700 font-bold">
                     <span>رسوم النظام المستحقة</span>
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"></path></svg>
                 </div>
                 <p class="text-orange-800 font-bold text-lg">4500 ر.س</p>
                 <p class="text-[8px] text-orange-400 uppercase">SARSA4380000295608016001302</p>
@@ -110,8 +93,6 @@
 
     <div class="max-w-md mx-auto">
         <h3 class="font-bold text-right mb-2">آخر العمليات</h3>
-        <p class="text-gray-400 text-xs text-right mb-3">قائمة بأحدث عمليات الاشتراك وتوزيع الأرباح</p>
-        
         <div class="bg-white rounded-xl shadow-sm overflow-hidden text-[10px]">
             <table class="w-full text-right">
                 <thead class="bg-gray-50 text-gray-500">
@@ -132,7 +113,7 @@
                         <td class="p-2">فهد بن خالد</td>
                     </tr>
                     <tr class="bg-gray-50">
-                        <td class="p-2 text-blue-500 italic">تنشيط نظام</td>
+                        <td class="p-2 text-blue-500">تنشيط نظام</td>
                         <td class="p-2">2026/04/16</td>
                         <td class="p-2 font-bold text-red-500">-750 ر.س</td>
                         <td class="p-2">تنشيط نظام</td>
@@ -144,6 +125,7 @@
     </div>
 
     <script>
+        // تعديل أرقام الرسم البياني من هنا
         const ctx = document.getElementById('earningsChart').getContext('2d');
         new Chart(ctx, {
             type: 'line',
@@ -151,7 +133,8 @@
                 labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو'],
                 datasets: [{
                     label: 'الأرباح',
-                    data: [3800, 2500, 2000, 2800, 1900, 2390, 3500],
+                    // غير الأرقام أدناه لتغيير شكل المنحنى
+                    data: [3800, 2500, 2000, 2800, 1900, 2390, 3500], 
                     borderColor: '#000',
                     borderWidth: 2,
                     tension: 0.4,
