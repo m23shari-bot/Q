@@ -3,152 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الاستثمار الاحترافي | Vision Pro</title>
-    
+    <title>نظام الإدارة</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #f8f9fa; }
-        .tab-content { display: none; }
-        .active-tab { display: block; }
-        .card { background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        body { font-family: 'Cairo', sans-serif; background-color: #f8f9fa; }
+        .copy-btn { cursor: pointer; transition: opacity 0.2s; }
+        .copy-btn:active { opacity: 0.5; }
     </style>
 </head>
-<body class="pb-24">
+<body class="p-4">
 
-    <div id="user-view" class="tab-content active-tab p-4 pt-10">
-        <div class="max-w-md mx-auto">
-            <h1 class="text-center font-black text-2xl mb-8 text-gray-800">نظام استعلام الأرباح</h1>
-            
-            <div class="card p-6 bg-slate-900 text-white shadow-xl">
-                <label class="block text-xs text-slate-400 mb-2">رقم الآيبان الخاص بك (IBAN)</label>
-                <input type="text" id="uIban" placeholder="أدخل الرقم هنا..." 
-                       class="w-full p-4 rounded-xl text-black outline-none mb-4 text-right">
-                <button onclick="checkUser()" id="btnCheck" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-xl font-bold transition-all">
-                    استعلام الآن
-                </button>
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-sm p-4 mb-4">
+        <div class="flex justify-between items-center mb-6">
+            <span class="bg-black text-white px-3 py-1 rounded-lg text-sm font-bold">AD</span>
+            <h1 class="text-lg font-bold">نظام الإدارة</h1>
+        </div>
+        
+        <div class="text-right mb-4">
+            <div class="text-3xl font-bold">942</div>
+        </div>
+
+        <div class="border rounded-xl p-3 flex justify-between items-center">
+            <div class="bg-red-50 p-2 rounded-full">
+                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
             </div>
+            <div class="text-right">
+                <p class="text-gray-500 text-xs">طلبات معلقة</p>
+                <p class="text-xl font-bold">12</p>
+            </div>
+            <span class="text-green-500 text-xs bg-green-50 px-2 py-1 rounded">3+ ↑</span>
+        </div>
+    </div>
 
-            <div id="resultBox" class="hidden mt-6 animate-fade-in space-y-4">
-                <div class="card p-6 border-r-8 border-blue-500">
-                    <h3 id="rName" class="font-bold text-xl text-gray-800">---</h3>
-                    <p id="rWallet" class="text-sm text-blue-600 mt-2 font-mono"></p>
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-sm p-4 mb-4">
+        <div class="flex justify-between items-center mb-4">
+            <button class="text-blue-500 text-xs border border-blue-100 px-3 py-1 rounded-lg">تحميل التقرير</button>
+            <div class="text-right">
+                <h2 class="font-bold">نمو الأرباح</h2>
+                <p class="text-gray-400 text-xs">تحليل الأرباح الشهرية للنظام</p>
+            </div>
+        </div>
+        <canvas id="earningsChart" height="200"></canvas>
+    </div>
+
+    <div class="max-w-md mx-auto bg-[#1a1a1a] text-white rounded-3xl p-6 mb-4">
+        <h3 class="text-center font-bold mb-2">الاستعلام عن الأرباح</h3>
+        <p class="text-center text-gray-400 text-xs mb-4">أدخل رقم الآيبان (IBAN) المشترك لعرض تفاصيل أرباحه</p>
+        
+        <div class="relative mb-4">
+            <input type="text" placeholder="أدخل رقم الآيبان هنا..." class="w-full bg-[#2a2a2a] border-none rounded-xl py-3 px-4 text-right text-sm focus:ring-1 focus:ring-gray-500">
+            <button class="absolute left-3 top-3 text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </button>
+        </div>
+        
+        <button class="w-full bg-white text-black font-bold py-3 rounded-xl">استعلام الآن</button>
+    </div>
+
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-sm p-4 mb-4">
+        <div class="flex items-center justify-between mb-4">
+            <span class="bg-green-500 text-white text-[10px] px-2 py-0.5 rounded-full">نشط</span>
+            <div class="flex items-center gap-3">
+                <div class="text-right">
+                    <p class="font-bold">فهد بن خالد</p>
+                    <p class="text-gray-400 text-xs">مشترك نشط في النظام</p>
                 </div>
-                <div class="card p-6 bg-green-50 border-r-8 border-green-500 flex justify-between items-center">
-                    <div>
-                        <p class="text-xs text-gray-500">الأرباح المستحقة</p>
-                        <h2 id="rEarn" class="text-2xl font-black text-green-600">---</h2>
-                    </div>
-                    <div class="text-left">
-                        <p class="text-xs text-gray-400">الرسوم الإدارية</p>
-                        <p id="rFees" class="font-bold text-red-500">---</p>
-                    </div>
+                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path></svg>
                 </div>
-                <button class="w-full bg-black text-white py-4 rounded-xl font-bold shadow-lg">تنشيط السحب الآن</button>
+            </div>
+        </div>
+
+        <div class="space-y-3 text-sm">
+            <div class="flex justify-between border-b pb-2">
+                <span class="font-bold">08484848734</span>
+                <span class="text-gray-500">رقم الجوال</span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <span class="font-bold text-[10px]">SA4380000295608016001302</span>
+                <span class="text-gray-500">رقم الآيبان</span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <span class="font-bold">4,000 ر.س</span>
+                <span class="text-gray-500">مبلغ الاشتراك</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-bold text-green-600 text-lg">25,000 ر.س</span>
+                <span class="text-gray-500">إجمالي الأرباح</span>
+            </div>
+        </div>
+
+        <div class="mt-4 bg-orange-50 border border-orange-100 rounded-xl p-3 flex justify-between items-center">
+            <button class="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-bold">تنشيط الآن</button>
+            <div class="text-right">
+                <div class="flex items-center justify-end gap-1 text-orange-700 font-bold">
+                    <span>رسوم النظام المستحقة</span>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"></path></svg>
+                </div>
+                <p class="text-orange-800 font-bold text-lg">4500 ر.س</p>
+                <p class="text-[8px] text-orange-400 uppercase">SARSA4380000295608016001302</p>
             </div>
         </div>
     </div>
 
-    <div id="admin-view" class="tab-content p-4 pt-10">
-        <div class="max-w-md mx-auto">
-            <h2 class="font-bold text-xl mb-6 text-gray-800">إضافة أو تعديل بيانات مستثمر</h2>
-            <div class="card p-6 space-y-4">
-                <input type="text" id="aName" placeholder="الاسم الكامل للمشترك" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
-                <input type="text" id="aIban" placeholder="رقم الآيبان (IBAN)" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
-                <div class="grid grid-cols-2 gap-3">
-                    <input type="number" id="aEarn" placeholder="الأرباح" class="p-3 bg-gray-50 border rounded-xl outline-none">
-                    <input type="number" id="aFees" placeholder="الرسوم" class="p-3 bg-gray-50 border rounded-xl outline-none">
-                </div>
-                <input type="text" id="aWType" placeholder="نوع المحفظة (STC Pay, Binance...)" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
-                <input type="text" id="aWAddr" placeholder="رقم أو عنوان المحفظة" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
-                <button onclick="saveToCloud()" id="btnSave" class="w-full bg-blue-700 text-white py-4 rounded-xl font-bold shadow-lg">حفظ البيانات سحابياً</button>
-            </div>
+    <div class="max-w-md mx-auto">
+        <h3 class="font-bold text-right mb-2">آخر العمليات</h3>
+        <p class="text-gray-400 text-xs text-right mb-3">قائمة بأحدث عمليات الاشتراك وتوزيع الأرباح</p>
+        
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden text-[10px]">
+            <table class="w-full text-right">
+                <thead class="bg-gray-50 text-gray-500">
+                    <tr>
+                        <th class="p-2">الحالة</th>
+                        <th class="p-2">التاريخ</th>
+                        <th class="p-2">المبلغ</th>
+                        <th class="p-2">العملية</th>
+                        <th class="p-2">المشترك</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr>
+                        <td class="p-2 text-green-500">مكتمل</td>
+                        <td class="p-2">2026/04/16</td>
+                        <td class="p-2 font-bold text-green-600">+10,000 ر.س</td>
+                        <td class="p-2">توزيع أرباح</td>
+                        <td class="p-2">فهد بن خالد</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="p-2 text-blue-500 italic">تنشيط نظام</td>
+                        <td class="p-2">2026/04/16</td>
+                        <td class="p-2 font-bold text-red-500">-750 ر.س</td>
+                        <td class="p-2">تنشيط نظام</td>
+                        <td class="p-2">عفاف مبارك</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around p-4 z-50">
-        <button onclick="switchTab('user-view')" class="text-blue-600 font-bold text-sm">واجهة المستثمر</button>
-        <button onclick="switchTab('admin-view')" class="text-gray-400 font-bold text-sm">لوحة الإدارة</button>
-    </nav>
 
     <script>
-        // ==========================================
-        // 1. ضع بياناتك هنا ليربط الموقع مع الجدول
-        // ==========================================
-        const PROJECT_URL = 'ضع_رابط_المشروع_هنا'; 
-        const API_KEY = 'ضع_مفتاح_API_هنا';
-        // ==========================================
-
-        const supabaseClient = supabase.createClient(PROJECT_URL, API_KEY);
-
-        // وظيفة التبديل بين الصفحات
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active-tab'));
-            document.getElementById(tabId).classList.add('active-tab');
-        }
-
-        // وظيفة البحث للمستثمر
-        async function checkUser() {
-            const ibanValue = document.getElementById('uIban').value;
-            const btn = document.getElementById('btnCheck');
-            
-            if(!ibanValue) return alert("يرجى إدخال الآيبان");
-            
-            btn.innerText = "جاري البحث...";
-            btn.disabled = true;
-
-            const { data, error } = await supabaseClient
-                .from('subscribers')
-                .select('*')
-                .eq('iban', ibanValue)
-                .single();
-
-            if (data) {
-                document.getElementById('rName').innerText = data.full_name;
-                document.getElementById('rWallet').innerText = data.wallet_type + ": " + data.wallet_address;
-                document.getElementById('rEarn').innerText = data.total_earnings.toLocaleString() + " ر.س";
-                document.getElementById('rFees').innerText = data.fees_due.toLocaleString() + " ر.س";
-                document.getElementById('resultBox').classList.remove('hidden');
-            } else {
-                alert("رقم الآيبان غير مسجل أو توجد مشكلة في البيانات");
+        const ctx = document.getElementById('earningsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو'],
+                datasets: [{
+                    label: 'الأرباح',
+                    data: [3800, 2500, 2000, 2800, 1900, 2390, 3500],
+                    borderColor: '#000',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { position: 'right', ticks: { size: 10 } },
+                    x: { ticks: { size: 10 } }
+                }
             }
-            btn.innerText = "استعلام الآن";
-            btn.disabled = false;
-        }
-
-        // وظيفة الحفظ للمدير (أنت)
-        async function saveToCloud() {
-            const btn = document.getElementById('btnSave');
-            const investorData = {
-                full_name: document.getElementById('aName').value,
-                iban: document.getElementById('aIban').value,
-                total_earnings: parseFloat(document.getElementById('aEarn').value),
-                fees_due: parseFloat(document.getElementById('aFees').value),
-                wallet_type: document.getElementById('aWType').value,
-                wallet_address: document.getElementById('aWAddr').value
-            };
-
-            if(!investorData.iban || !investorData.full_name) return alert("أكمل الاسم والآيبان");
-
-            btn.innerText = "جاري الحفظ...";
-            btn.disabled = true;
-
-            const { error } = await supabaseClient
-                .from('subscribers')
-                .upsert([investorData], { onConflict: 'iban' });
-
-            if (!error) {
-                alert("تم حفظ البيانات بنجاح!");
-                document.querySelectorAll('#admin-view input').forEach(i => i.value = '');
-            } else {
-                alert("حدث خطأ أثناء الحفظ، تأكد من إعدادات الجدول");
-                console.log(error);
-            }
-            btn.innerText = "حفظ البيانات سحابياً";
-            btn.disabled = false;
-        }
+        });
     </script>
 </body>
 </html>
