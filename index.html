@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الإدارة - التحكم الكامل</title>
+    <title>نظام الإدارة - التحكم الشامل بالدفع</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
@@ -18,24 +18,22 @@
 <body class="p-4">
 
     <div class="max-w-md mx-auto config-panel p-5 shadow-2xl">
-        <h3 class="text-center font-black text-orange-600 mb-4 border-b pb-2">⚙️ لوحة التحكم المطلقة</h3>
+        <h3 class="text-center font-black text-orange-600 mb-4 border-b pb-2">⚙️ لوحة التحكم في خيارات الدفع</h3>
         
         <div class="space-y-4">
             <div class="grid grid-cols-2 gap-2">
-                <div><label>اسم المشترك</label><input type="text" id="in-name" value="فهد بن خالد" oninput="sync()"></div>
                 <div><label>العملة</label>
                     <select id="in-curr" onchange="sync()">
                         <option value="ر.س">ريال سعودي</option>
                         <option value="د.إ">درهم إماراتي</option>
                         <option value="د.ك">دينار كويتي</option>
                         <option value="ر.ع">ريال عماني</option>
+                        <option value="د.ب">دينار بحريني</option>
+                        <option value="ر.ق">ريال قطري</option>
                         <option value="USDT">USDT</option>
                     </select>
                 </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2">
-                <div><label>اختر البنك</label>
+                <div><label>البنك / المنصة</label>
                     <select id="in-bank" onchange="sync()">
                         <option>مصرف الراجحي</option>
                         <option>البنك الأهلي (SNB)</option>
@@ -43,11 +41,24 @@
                         <option>مصرف الإنماء</option>
                         <option>STC Pay</option>
                         <option>Binance</option>
+                        <option>Trust Wallet</option>
                     </select>
                 </div>
-                <div><label>نوع العنوان</label><input type="text" id="in-acc-label" value="رقم الآيبان" oninput="sync()"></div>
             </div>
-            <div><label>رقم الحساب / المحفظة</label><input type="text" id="in-acc-val" value="SA4380000295608016001302" oninput="sync()"></div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div><label>نوع العنوان</label>
+                    <select id="in-acc-label" onchange="sync()">
+                        <option value="رقم الآيبان (IBAN)">رقم الآيبان (IBAN)</option>
+                        <option value="رقم الحساب البنكي">رقم الحساب البنكي</option>
+                        <option value="عنوان المحفظة الرقمية">عنوان المحفظة الرقمية</option>
+                        <option value="رقم الهاتف المرتبط">رقم الهاتف (STC Pay)</option>
+                    </select>
+                </div>
+                <div><label>الاسم الظاهر</label><input type="text" id="in-name" value="فهد بن خالد" oninput="sync()"></div>
+            </div>
+
+            <div><label>بيانات الحساب / العنوان</label><input type="text" id="in-acc-val" value="SA4380000295608016001302" class="font-mono" oninput="sync()"></div>
 
             <div class="grid grid-cols-3 gap-2 border-t pt-2">
                 <div><label>الاشتراك</label><input type="text" id="in-sub" value="4,000" oninput="sync()"></div>
@@ -56,21 +67,21 @@
             </div>
 
             <div class="bg-gray-50 p-3 rounded-xl border">
-                <p class="text-[10px] font-bold mb-2 text-gray-500">تعديل سجل العمليات السفلية:</p>
+                <p class="text-[10px] font-bold mb-2 text-gray-400">تعديل سجل العمليات:</p>
                 <div class="space-y-2">
-                    <div class="grid grid-cols-3 gap-1">
+                    <div class="grid grid-cols-3 gap-1 text-[10px]">
                         <input type="text" id="t1-type" value="توزيع أرباح" oninput="sync()">
                         <input type="text" id="t1-amt" value="+10,000" oninput="sync()">
                         <input type="text" id="t1-date" value="2026/04/16" oninput="sync()">
                     </div>
-                    <div class="grid grid-cols-3 gap-1">
+                    <div class="grid grid-cols-3 gap-1 text-[10px]">
                         <input type="text" id="t2-type" value="رسوم نظام" oninput="sync()">
                         <input type="text" id="t2-amt" value="-750" oninput="sync()">
                         <input type="text" id="t2-date" value="2026/04/16" oninput="sync()">
                     </div>
                 </div>
             </div>
-            <div><label>وقت تحديث النظام</label><input type="text" id="in-time" value="اليوم، 10:18 م" oninput="sync()"></div>
+            <div><label>توقيت التحديث</label><input type="text" id="in-time" value="اليوم، 10:18 م" oninput="sync()"></div>
         </div>
     </div>
 
@@ -85,30 +96,25 @@
 
         <div class="space-y-6 text-right">
             <div class="flex justify-between items-center border-b border-gray-50 pb-4">
-                <div class="text-left font-mono text-[11px] font-bold text-gray-700 uppercase" id="out-acc-val">SA4380000295608016001302</div>
-                <div><span class="text-gray-400 text-[10px] block" id="out-acc-label">رقم الآيبان</span></div>
+                <div class="text-left font-mono text-[10px] font-bold text-gray-700" id="out-acc-val">SA4380000295608016001302</div>
+                <div><span class="text-gray-400 text-[10px] block" id="out-acc-label">رقم الآيبان (IBAN)</span></div>
             </div>
 
             <div class="flex justify-between items-center">
-                <span class="text-lg font-bold text-gray-800">0584848487</span>
-                <span class="text-gray-400 text-sm">الجوال</span>
-            </div>
-
-            <div class="flex justify-between items-center">
-                <span class="text-lg font-bold text-gray-800"><span id="out-sub">4,000</span> <span class="curr">ر.س</span></span>
+                <span id="out-sub" class="text-lg font-bold text-gray-800 tracking-tight">4,000 <span class="curr">ر.س</span></span>
                 <span class="text-gray-400 text-sm">مبلغ الاشتراك</span>
             </div>
 
             <div class="flex justify-between items-center">
-                <span class="text-2xl font-bold text-green-600"><span id="out-prof">25,000</span> <span class="curr">ر.س</span></span>
+                <span id="out-prof" class="text-2xl font-bold text-green-600 tracking-tight">25,000 <span class="curr">ر.س</span></span>
                 <span class="text-gray-400 text-sm">صافي الأرباح</span>
             </div>
 
-            <div class="bg-orange-50 rounded-[2rem] p-6 flex justify-between items-center relative border border-orange-100">
-                <button class="btn-orange text-white px-8 py-3 rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-all">تنشيط</button>
+            <div class="bg-orange-50 rounded-[2rem] p-6 flex justify-between items-center border border-orange-100/50">
+                <button class="btn-orange text-white px-8 py-3 rounded-2xl font-bold text-lg shadow-lg">تنشيط</button>
                 <div class="text-right">
                     <p class="text-orange-800 font-bold text-xs mb-1">الرسوم المستحقة</p>
-                    <p class="text-orange-900 text-3xl font-black"><span id="out-fees">4,500</span> <span class="curr text-lg">ر.س</span></p>
+                    <p id="out-fees" class="text-orange-900 text-3xl font-black">4,500 <span class="curr text-lg">ر.س</span></p>
                 </div>
             </div>
         </div>
@@ -117,7 +123,7 @@
     <div class="w-full max-w-md mx-auto">
         <div class="flex justify-between items-center mb-3 px-2">
             <p class="text-gray-400 text-[10px]">تحديث: <span id="out-time">اليوم، 10:18 م</span></p>
-            <h3 class="font-bold text-gray-800">سجل العمليات</h3>
+            <h3 class="font-bold text-gray-800 text-sm">سجل العمليات</h3>
         </div>
         <div class="bg-white rounded-[2rem] shadow-sm overflow-hidden border border-gray-100">
             <table class="w-full text-right text-[11px]">
@@ -133,13 +139,13 @@
                     <tr>
                         <td class="p-4"><span class="bg-green-50 text-green-600 px-2 py-1 rounded font-bold">ناجحة</span></td>
                         <td class="p-4 font-black text-green-600"><span id="out-t1-amt">+10,000</span> <span class="curr text-[8px]">ر.س</span></td>
-                        <td id="out-t1-type" class="p-4 font-bold">توزيع أرباح</td>
+                        <td id="out-t1-type" class="p-4 font-bold text-gray-700 uppercase">توزيع أرباح</td>
                         <td id="out-t1-date" class="p-4 text-gray-400">2026/04/16</td>
                     </tr>
                     <tr>
                         <td class="p-4"><span class="bg-blue-50 text-blue-600 px-2 py-1 rounded font-bold">معالجة</span></td>
                         <td class="p-4 font-black text-red-500"><span id="out-t2-amt">-750</span> <span class="curr text-[8px]">ر.س</span></td>
-                        <td id="out-t2-type" class="p-4 font-bold">رسوم نظام</td>
+                        <td id="out-t2-type" class="p-4 font-bold text-gray-700 uppercase">رسوم نظام</td>
                         <td id="out-t2-date" class="p-4 text-gray-400">2026/04/16</td>
                     </tr>
                 </tbody>
@@ -149,22 +155,31 @@
 
     <script>
         function sync() {
-            // مزامنة العملة
+            // مزامنة العملة لجميع الحقول
             const currency = document.getElementById('in-curr').value;
             document.querySelectorAll('.curr').forEach(el => el.innerText = currency);
 
-            // مصفوفة الربط (معرف الإدخال -> معرف الإخراج)
-            const map = [
-                ['in-name', 'out-name'], ['in-bank', 'out-bank'], ['in-sub', 'out-sub'],
-                ['in-prof', 'out-prof'], ['in-fees', 'out-fees'], ['in-time', 'out-time'],
-                ['in-acc-label', 'out-acc-label'], ['in-acc-val', 'out-acc-val'],
-                ['t1-type', 'out-t1-type'], ['t1-amt', 'out-t1-amt'], ['t1-date', 'out-t1-date'],
-                ['t2-type', 'out-t2-type'], ['t2-amt', 'out-t2-amt'], ['t2-date', 'out-t2-date']
-            ];
+            // ربط الحقول (المدخلات -> المخرجات)
+            const mappings = {
+                'in-name': 'out-name', 'in-bank': 'out-bank',
+                'in-sub': 'out-sub', 'in-prof': 'out-prof', 'in-fees': 'out-fees',
+                'in-acc-label': 'out-acc-label', 'in-acc-val': 'out-acc-val',
+                'in-time': 'out-time', 't1-type': 'out-t1-type',
+                't1-amt': 'out-t1-amt', 't1-date': 'out-t1-date',
+                't2-type': 'out-t2-type', 't2-amt': 'out-t2-amt', 't2-date': 'out-t2-date'
+            };
 
-            map.forEach(p => {
-                document.getElementById(p[1]).innerText = document.getElementById(p[0]).value;
-            });
+            for (const [inputId, outputId] of Object.entries(mappings)) {
+                const inputVal = document.getElementById(inputId).value;
+                const outputEl = document.getElementById(outputId);
+                
+                // التعامل الخاص مع المبالغ لإضافة العملة بجانبها
+                if (['out-sub', 'out-prof', 'out-fees'].includes(outputId)) {
+                    outputEl.innerHTML = `${inputVal} <span class="curr text-[12px]">${currency}</span>`;
+                } else {
+                    outputEl.innerText = inputVal;
+                }
+            }
         }
         window.onload = sync;
     </script>
