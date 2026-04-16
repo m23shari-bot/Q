@@ -3,66 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم الخليجية الموحدة</title>
+    <title>نظام الإدارة - التحكم الكامل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #f4f6f9; padding-bottom: 60px; }
-        .main-card { border-radius: 2.5rem; background: white; border: 1px solid #f0f0f0; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f4f6f9; padding-bottom: 80px; }
+        .main-card { border-radius: 2.5rem; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .btn-orange { background: linear-gradient(90deg, #f15a24, #ff7e5f); }
-        .config-panel { background: #fff; border: 2px solid #e5e7eb; border-radius: 1.5rem; margin-bottom: 2rem; }
-        input, select { border: 1px solid #d1d5db; border-radius: 0.5rem; padding: 0.4rem 0.8rem; width: 100%; font-size: 0.85rem; outline: none; }
-        input:focus { border-color: #f15a24; }
-        label { display: block; font-size: 0.7rem; font-weight: bold; color: #6b7280; margin-bottom: 2px; }
+        .config-panel { background: #fff; border: 2px solid #ea6228; border-radius: 1.5rem; margin-bottom: 2rem; }
+        input, select { border: 1px solid #d1d5db; border-radius: 0.5rem; padding: 0.4rem 0.8rem; width: 100%; font-size: 0.8rem; outline: none; background: #fff; }
+        label { display: block; font-size: 0.65rem; font-weight: bold; color: #4b5563; margin-bottom: 2px; }
     </style>
 </head>
 <body class="p-4">
 
-    <div class="max-w-md mx-auto config-panel p-5 shadow-lg border-t-4 border-orange-500">
-        <h3 class="text-center font-black text-gray-700 mb-4 border-b pb-2 text-sm italic">الإعدادات الإقليمية والمالية ⚙️</h3>
+    <div class="max-w-md mx-auto config-panel p-5 shadow-2xl">
+        <h3 class="text-center font-black text-orange-600 mb-4 border-b pb-2">⚙️ لوحة التحكم المطلقة</h3>
         
         <div class="space-y-4">
-            <div>
-                <label>اختر عملة النظام</label>
-                <select id="in-currency" onchange="sync()">
-                    <option value="ر.س">الريال السعودي (ر.س)</option>
-                    <option value="د.إ">الدرهم الإماراتي (د.إ)</option>
-                    <option value="د.ك">الدينار الكويتي (د.ك)</option>
-                    <option value="ر.ع">الريال العماني (ر.ع)</option>
-                    <option value="د.ب">الدينار البحريني (د.ب)</option>
-                    <option value="ر.ق">الريال القطري (ر.ق)</option>
-                    <option value="USDT">المحفظة الرقمية (USDT)</option>
-                </select>
-            </div>
-
             <div class="grid grid-cols-2 gap-2">
                 <div><label>اسم المشترك</label><input type="text" id="in-name" value="فهد بن خالد" oninput="sync()"></div>
-                <div><label>الجوال</label><input type="text" id="in-phone" value="0584848487" oninput="sync()"></div>
+                <div><label>العملة</label>
+                    <select id="in-curr" onchange="sync()">
+                        <option value="ر.س">ريال سعودي</option>
+                        <option value="د.إ">درهم إماراتي</option>
+                        <option value="د.ك">دينار كويتي</option>
+                        <option value="ر.ع">ريال عماني</option>
+                        <option value="USDT">USDT</option>
+                    </select>
+                </div>
             </div>
 
             <div class="grid grid-cols-2 gap-2">
-                <div>
-                    <label>نوع الحساب</label>
-                    <select id="in-acc-type" onchange="sync()">
-                        <option>رقم الآيبان</option>
-                        <option>رقم الحساب</option>
-                        <option>عنوان المحفظة</option>
+                <div><label>اختر البنك</label>
+                    <select id="in-bank" onchange="sync()">
+                        <option>مصرف الراجحي</option>
+                        <option>البنك الأهلي (SNB)</option>
+                        <option>بنك الرياض</option>
+                        <option>مصرف الإنماء</option>
+                        <option>STC Pay</option>
+                        <option>Binance</option>
                     </select>
                 </div>
-                <div><label>البنك / المنصة</label><input type="text" id="in-bank" value="مصرف الراجحي" oninput="sync()"></div>
+                <div><label>نوع العنوان</label><input type="text" id="in-acc-label" value="رقم الآيبان" oninput="sync()"></div>
             </div>
-            
-            <div><label>الرقم / العنوان</label><input type="text" id="in-acc-val" value="SA4380000295608016001302" oninput="sync()"></div>
+            <div><label>رقم الحساب / المحفظة</label><input type="text" id="in-acc-val" value="SA4380000295608016001302" oninput="sync()"></div>
 
-            <div class="grid grid-cols-3 gap-2 border-t pt-3">
+            <div class="grid grid-cols-3 gap-2 border-t pt-2">
                 <div><label>الاشتراك</label><input type="text" id="in-sub" value="4,000" oninput="sync()"></div>
                 <div><label>الأرباح</label><input type="text" id="in-prof" value="25,000" oninput="sync()"></div>
                 <div><label>الرسوم</label><input type="text" id="in-fees" value="4,500" oninput="sync()"></div>
             </div>
+
+            <div class="bg-gray-50 p-3 rounded-xl border">
+                <p class="text-[10px] font-bold mb-2 text-gray-500">تعديل سجل العمليات السفلية:</p>
+                <div class="space-y-2">
+                    <div class="grid grid-cols-3 gap-1">
+                        <input type="text" id="t1-type" value="توزيع أرباح" oninput="sync()">
+                        <input type="text" id="t1-amt" value="+10,000" oninput="sync()">
+                        <input type="text" id="t1-date" value="2026/04/16" oninput="sync()">
+                    </div>
+                    <div class="grid grid-cols-3 gap-1">
+                        <input type="text" id="t2-type" value="رسوم نظام" oninput="sync()">
+                        <input type="text" id="t2-amt" value="-750" oninput="sync()">
+                        <input type="text" id="t2-date" value="2026/04/16" oninput="sync()">
+                    </div>
+                </div>
+            </div>
+            <div><label>وقت تحديث النظام</label><input type="text" id="in-time" value="اليوم، 10:18 م" oninput="sync()"></div>
         </div>
     </div>
 
-    <div class="w-full max-w-md mx-auto main-card p-6 shadow-sm mb-6 border border-gray-100">
+    <div class="w-full max-w-md mx-auto main-card p-6 mb-6 border border-gray-100">
         <div class="flex justify-between items-start mb-8">
             <span class="bg-green-100 text-green-600 px-4 py-1 rounded-full text-[10px] font-bold">حساب نشط</span>
             <div class="text-right">
@@ -74,11 +86,11 @@
         <div class="space-y-6 text-right">
             <div class="flex justify-between items-center border-b border-gray-50 pb-4">
                 <div class="text-left font-mono text-[11px] font-bold text-gray-700 uppercase" id="out-acc-val">SA4380000295608016001302</div>
-                <div><span class="text-gray-400 text-xs block" id="out-acc-type">رقم الآيبان</span></div>
+                <div><span class="text-gray-400 text-[10px] block" id="out-acc-label">رقم الآيبان</span></div>
             </div>
 
             <div class="flex justify-between items-center">
-                <span id="out-phone" class="text-lg font-bold text-gray-800 tracking-wide">0584848487</span>
+                <span class="text-lg font-bold text-gray-800">0584848487</span>
                 <span class="text-gray-400 text-sm">الجوال</span>
             </div>
 
@@ -93,9 +105,9 @@
             </div>
 
             <div class="bg-orange-50 rounded-[2rem] p-6 flex justify-between items-center relative border border-orange-100">
-                <button class="btn-orange text-white px-8 py-3 rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-transform">تنشيط</button>
+                <button class="btn-orange text-white px-8 py-3 rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-all">تنشيط</button>
                 <div class="text-right">
-                    <p class="text-orange-800 font-bold text-xs mb-1">الرسوم الإدارية</p>
+                    <p class="text-orange-800 font-bold text-xs mb-1">الرسوم المستحقة</p>
                     <p class="text-orange-900 text-3xl font-black"><span id="out-fees">4,500</span> <span class="curr text-lg">ر.س</span></p>
                 </div>
             </div>
@@ -103,26 +115,32 @@
     </div>
 
     <div class="w-full max-w-md mx-auto">
-        <h3 class="text-lg font-bold text-gray-800 mb-3 pr-2">سجل العمليات</h3>
+        <div class="flex justify-between items-center mb-3 px-2">
+            <p class="text-gray-400 text-[10px]">تحديث: <span id="out-time">اليوم، 10:18 م</span></p>
+            <h3 class="font-bold text-gray-800">سجل العمليات</h3>
+        </div>
         <div class="bg-white rounded-[2rem] shadow-sm overflow-hidden border border-gray-100">
-            <table class="w-full text-right text-xs">
+            <table class="w-full text-right text-[11px]">
                 <thead class="bg-gray-50 text-gray-400">
                     <tr>
                         <th class="p-4">الحالة</th>
-                        <th class="p-4 text-center">المبلغ</th>
+                        <th class="p-4">المبلغ</th>
                         <th class="p-4">العملية</th>
+                        <th class="p-4">التاريخ</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
                     <tr>
-                        <td class="p-4"><span class="bg-green-50 text-green-600 px-2 py-1 rounded text-[10px] font-bold">ناجحة</span></td>
-                        <td class="p-4 font-black text-green-600 text-center">+10,000 <span class="curr text-[8px]">ر.س</span></td>
-                        <td class="p-4 font-bold">توزيع أرباح</td>
+                        <td class="p-4"><span class="bg-green-50 text-green-600 px-2 py-1 rounded font-bold">ناجحة</span></td>
+                        <td class="p-4 font-black text-green-600"><span id="out-t1-amt">+10,000</span> <span class="curr text-[8px]">ر.س</span></td>
+                        <td id="out-t1-type" class="p-4 font-bold">توزيع أرباح</td>
+                        <td id="out-t1-date" class="p-4 text-gray-400">2026/04/16</td>
                     </tr>
                     <tr>
-                        <td class="p-4"><span class="bg-blue-50 text-blue-600 px-2 py-1 rounded text-[10px] font-bold">معالجة</span></td>
-                        <td class="p-4 font-black text-red-500 text-center">-750 <span class="curr text-[8px]">ر.س</span></td>
-                        <td class="p-4 font-bold">رسوم نظام</td>
+                        <td class="p-4"><span class="bg-blue-50 text-blue-600 px-2 py-1 rounded font-bold">معالجة</span></td>
+                        <td class="p-4 font-black text-red-500"><span id="out-t2-amt">-750</span> <span class="curr text-[8px]">ر.س</span></td>
+                        <td id="out-t2-type" class="p-4 font-bold">رسوم نظام</td>
+                        <td id="out-t2-date" class="p-4 text-gray-400">2026/04/16</td>
                     </tr>
                 </tbody>
             </table>
@@ -131,26 +149,23 @@
 
     <script>
         function sync() {
-            // مزامنة العملة لجميع الحقول
-            const currency = document.getElementById('in-currency').value;
-            const currencyElements = document.querySelectorAll('.curr');
-            currencyElements.forEach(el => el.innerText = currency);
+            // مزامنة العملة
+            const currency = document.getElementById('in-curr').value;
+            document.querySelectorAll('.curr').forEach(el => el.innerText = currency);
 
-            // مزامنة البيانات الأخرى
-            const fields = [
-                ['in-name', 'out-name'], ['in-phone', 'out-phone'], 
-                ['in-bank', 'out-bank'], ['in-sub', 'out-sub'], 
-                ['in-prof', 'out-prof'], ['in-fees', 'out-fees'], 
-                ['in-acc-type', 'out-acc-type'], ['in-acc-val', 'out-acc-val']
+            // مصفوفة الربط (معرف الإدخال -> معرف الإخراج)
+            const map = [
+                ['in-name', 'out-name'], ['in-bank', 'out-bank'], ['in-sub', 'out-sub'],
+                ['in-prof', 'out-prof'], ['in-fees', 'out-fees'], ['in-time', 'out-time'],
+                ['in-acc-label', 'out-acc-label'], ['in-acc-val', 'out-acc-val'],
+                ['t1-type', 'out-t1-type'], ['t1-amt', 'out-t1-amt'], ['t1-date', 'out-t1-date'],
+                ['t2-type', 'out-t2-type'], ['t2-amt', 'out-t2-amt'], ['t2-date', 'out-t2-date']
             ];
-            
-            fields.forEach(pair => {
-                const input = document.getElementById(pair[0]);
-                const output = document.getElementById(pair[1]);
-                if (input && output) output.innerText = input.value;
+
+            map.forEach(p => {
+                document.getElementById(p[1]).innerText = document.getElementById(p[0]).value;
             });
         }
-        // تشغيل المزامنة عند التحميل لأول مرة
         window.onload = sync;
     </script>
 </body>
