@@ -3,119 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الإدارة - لوحة التحكم</title>
+    <title>لوحة التحكم - نظام الإدارة</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #f4f7f6; color: #1a1a1a; }
-        .card { background: white; border-radius: 1.5rem; shadow-sm: 0 2px 4px rgba(0,0,0,0.05); }
+        body { font-family: 'Cairo', sans-serif; background-color: #f0f2f5; }
+        .main-card { border-radius: 2.5rem; }
+        .btn-orange { background: linear-gradient(90deg, #f15a24, #ff7e5f); transition: transform 0.2s; }
+        .btn-orange:active { transform: scale(0.95); }
+        input, select { border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 0.5rem 1rem; width: 100%; outline: none; }
+        input:focus { border-color: #f15a24; }
     </style>
 </head>
 <body class="p-4 pb-20">
 
-    <div class="max-w-md mx-auto mb-6 flex justify-between items-center">
-        <span class="bg-black text-white px-3 py-1 rounded-lg text-sm font-bold">AD</span>
-        <h1 class="text-xl font-bold">نظام الإدارة المالي</h1>
-    </div>
-
-    <div class="max-w-md mx-auto card p-6 mb-6 shadow-lg border border-gray-100">
-        <h2 class="text-center font-bold mb-4">إعدادات الدفع والاستعلام</h2>
-        
-        <div class="space-y-4">
+    <div class="max-w-md mx-auto bg-white rounded-3xl p-6 shadow-xl mb-8 border-2 border-orange-100">
+        <h3 class="text-center font-black text-orange-600 mb-4">⚙️ لوحة تعديل البيانات</h3>
+        <div class="space-y-3">
             <div>
-                <label class="block text-xs text-gray-500 mb-1 mr-1">اختر البنك المحلي</label>
-                <select class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 text-sm outline-none focus:ring-2 focus:ring-black">
-                    <option value="rajhi">مصرف الراجحي</option>
-                    <option value="ahli">البنك الأهلي السعودي (SNB)</option>
-                    <option value="riyad">بنك الرياض</option>
-                    <option value="alinma">مصرف الإنماء</option>
-                    <option value="stcpay">STC Pay</option>
-                    <option value="bilad">بنك البلاد</option>
-                    <option value="sabb">البنك السعودي الأول (SAB)</option>
-                    <option value="fransi">البنك السعودي الفرنسي</option>
-                    <option value="meem">بنك ميم</option>
-                    <option value="arab">البنك العربي الوطني</option>
+                <label class="text-xs font-bold text-gray-500">اسم المشترك</label>
+                <input type="text" id="edit-name" value="فهد بن خالد" oninput="updateCard()">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-xs font-bold text-gray-500">رقم الجوال</label>
+                    <input type="text" id="edit-phone" value="0584848487" oninput="updateCard()">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-gray-500">رقم العضوية</label>
+                    <input type="text" id="edit-member" value="88291" oninput="updateCard()">
+                </div>
+            </div>
+            <div>
+                <label class="text-xs font-bold text-gray-500">اختر البنك السعودي</label>
+                <select id="edit-bank" onchange="updateCard()">
+                    <option value="مصرف الراجحي">مصرف الراجحي</option>
+                    <option value="البنك الأهلي السعودي">البنك الأهلي السعودي (SNB)</option>
+                    <option value="بنك الرياض">بنك الرياض</option>
+                    <option value="مصرف الإنماء">مصرف الإنماء</option>
+                    <option value="STC Pay">STC Pay</option>
+                    <option value="بنك البلاد">بنك البلاد</option>
+                    <option value="البنك السعودي الأول">البنك السعودي الأول (SAB)</option>
                 </select>
             </div>
-
-            <div>
-                <label class="block text-xs text-gray-500 mb-1 mr-1">رقم الآيبان (IBAN)</label>
-                <input type="text" value="SA4380000295608016001302" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 text-left text-sm font-mono focus:ring-2 focus:ring-black">
-            </div>
-
-            <button class="w-full bg-black text-white font-bold py-4 rounded-2xl hover:bg-gray-800 transition">تحديث البيانات الآن</button>
-        </div>
-    </div>
-
-    <div class="max-w-md mx-auto card p-5 mb-6 border-t-4 border-green-500">
-        <div class="flex items-center justify-between mb-6">
-            <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold">حساب نشط</span>
-            <div class="text-right">
-                <p class="text-lg font-bold">فهد بن خالد</p>
-                <p class="text-gray-400 text-xs">رقم العضوية: #88291</p>
-            </div>
-        </div>
-
-        <div class="space-y-4">
-            <div class="flex justify-between items-center border-b border-gray-50 pb-2">
-                <span class="font-bold text-gray-800">0584848487</span>
-                <span class="text-gray-400 text-sm">الجوال</span>
-            </div>
-            
-            <div class="flex justify-between items-center border-b border-gray-50 pb-2">
-                <span class="font-bold text-gray-800">4,000 ر.س</span>
-                <span class="text-gray-400 text-sm">مبلغ الاشتراك الرسمي</span>
-            </div>
-
-            <div class="flex justify-between items-center border-b border-gray-50 pb-2">
-                <span class="font-bold text-green-600 text-xl">25,000 ر.س</span>
-                <span class="text-gray-400 text-sm">صافي الأرباح</span>
-            </div>
-
-            <div class="bg-orange-50 rounded-2xl p-4 flex justify-between items-center mt-4">
-                <div class="text-right">
-                    <p class="text-orange-700 text-xs font-bold mb-1 text-right">الرسوم الإدارية المستحقة</p>
-                    <p class="text-orange-900 text-2xl font-black">4,500 ر.س</p>
+            <div class="grid grid-cols-3 gap-2">
+                <div>
+                    <label class="text-xs font-bold text-gray-500">الاشتراك</label>
+                    <input type="text" id="edit-sub" value="4,000" oninput="updateCard()">
                 </div>
-                <button class="bg-orange-600 text-white px-5 py-2 rounded-xl font-bold shadow-md">تنشيط</button>
+                <div>
+                    <label class="text-xs font-bold text-gray-500">الأرباح</label>
+                    <input type="text" id="edit-profit" value="25,000" oninput="updateCard()">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-gray-500">الرسوم</label>
+                    <input type="text" id="edit-fees" value="4,500" oninput="updateCard()">
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="max-w-md mx-auto">
-        <div class="flex justify-between items-end mb-3 px-1">
-            <p class="text-gray-400 text-[10px]">تاريخ آخر تحديث: اليوم، 10:18 م</p>
-            <h3 class="font-bold">سجل العمليات</h3>
+    <hr class="max-w-md mx-auto mb-8 border-dashed border-gray-300">
+
+    <div class="w-full max-w-md bg-white main-card p-6 shadow-sm mb-6 mx-auto border border-gray-100">
+        <div class="flex justify-between items-start mb-8">
+            <span class="bg-green-100 text-green-600 px-4 py-1 rounded-full text-sm font-bold">حساب نشط</span>
+            <div class="text-right">
+                <h2 id="card-name" class="text-2xl font-bold text-gray-800 tracking-tight">فهد بن خالد</h2>
+                <p class="text-gray-400 text-xs">رقم العضوية: #<span id="card-member">88291</span></p>
+                <p id="card-bank" class="text-blue-500 text-[10px] font-bold mt-1">مصرف الراجحي</p>
+            </div>
         </div>
-        
-        <div class="card overflow-hidden">
+
+        <div class="space-y-7">
+            <div class="flex justify-between items-center">
+                <span id="card-phone" class="text-xl font-bold text-gray-800">0584848487</span>
+                <span class="text-gray-400 font-medium">الجوال</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+                <span class="text-xl font-bold text-gray-800"><span id="card-sub">4,000</span> ر.س</span>
+                <span class="text-gray-400 font-medium">مبلغ الاشتراك الرسمي</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+                <span class="text-2xl font-bold text-green-600"><span id="card-profit">25,000</span> ر.س</span>
+                <span class="text-gray-400 font-medium">صافي الأرباح</span>
+            </div>
+
+            <div class="bg-orange-50 rounded-[2rem] p-6 flex justify-between items-center relative border border-orange-100/50">
+                <button class="btn-orange text-white px-8 py-3 rounded-2xl font-bold text-lg shadow-lg">تنشيط</button>
+                <div class="text-right">
+                    <p class="text-orange-800 font-bold text-xs mb-1">الرسوم الإدارية المستحقة</p>
+                    <p class="text-orange-900 text-3xl font-black"><span id="card-fees">4,500</span> ر.س</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-md mx-auto">
+        <div class="flex justify-between items-center mb-4 px-2">
+            <p class="text-gray-400 text-[10px]">تاريخ آخر تحديث: اليوم، 10:18 م</p>
+            <h3 class="text-lg font-bold text-gray-800">سجل العمليات</h3>
+        </div>
+
+        <div class="bg-white rounded-[2rem] shadow-sm overflow-hidden border border-gray-100">
             <table class="w-full text-right text-sm">
-                <thead class="bg-gray-50 text-gray-400 text-[11px]">
+                <thead class="bg-gray-50 text-gray-400">
                     <tr>
-                        <th class="p-3 font-medium">الحالة</th>
-                        <th class="p-3 font-medium">المبلغ</th>
-                        <th class="p-3 font-medium">العملية</th>
-                        <th class="p-3 font-medium">التاريخ</th>
+                        <th class="p-4 font-bold text-[11px]">الحالة</th>
+                        <th class="p-4 font-bold text-[11px]">المبلغ</th>
+                        <th class="p-4 font-bold text-[11px]">العملية</th>
+                        <th class="p-4 font-bold text-[11px]">التاريخ</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
                     <tr>
-                        <td class="p-3"><span class="text-green-600 bg-green-50 px-2 py-0.5 rounded text-[10px]">ناجحة</span></td>
-                        <td class="p-3 font-bold text-green-600">+10,000</td>
-                        <td class="p-3 font-medium">أرباح</td>
-                        <td class="p-3 text-gray-400 text-[10px]">2026/04/16</td>
+                        <td class="p-4"><span class="bg-green-50 text-green-600 px-3 py-1 rounded-lg text-[10px] font-bold">ناجحة</span></td>
+                        <td class="p-4 font-black text-green-600">+10,000</td>
+                        <td class="p-4 font-bold text-gray-700">أرباح</td>
+                        <td class="p-4 text-gray-400 text-[10px]">2026/04/16</td>
                     </tr>
                     <tr>
-                        <td class="p-3"><span class="text-blue-600 bg-blue-50 px-2 py-0.5 rounded text-[10px]">معالجة</span></td>
-                        <td class="p-3 font-bold text-red-500">-750</td>
-                        <td class="p-3 font-medium">رسوم</td>
-                        <td class="p-3 text-gray-400 text-[10px]">2026/04/16</td>
+                        <td class="p-4"><span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg text-[10px] font-bold">معالجة</span></td>
+                        <td class="p-4 font-black text-red-500">-750</td>
+                        <td class="p-4 font-bold text-gray-700">رسوم</td>
+                        <td class="p-4 text-gray-400 text-[10px]">2026/04/16</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
+    <script>
+        function updateCard() {
+            // ربط الحقول ببعضها
+            document.getElementById('card-name').innerText = document.getElementById('edit-name').value;
+            document.getElementById('card-phone').innerText = document.getElementById('edit-phone').value;
+            document.getElementById('card-member').innerText = document.getElementById('edit-member').value;
+            document.getElementById('card-bank').innerText = document.getElementById('edit-bank').value;
+            document.getElementById('card-sub').innerText = document.getElementById('edit-sub').value;
+            document.getElementById('card-profit').innerText = document.getElementById('edit-profit').value;
+            document.getElementById('card-fees').innerText = document.getElementById('edit-fees').value;
+        }
+    </script>
 </body>
 </html>
